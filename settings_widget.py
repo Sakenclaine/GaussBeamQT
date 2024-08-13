@@ -60,10 +60,6 @@ class SettingsWidget(QWidget):
         addLens = QPushButton('Add Lens')
         addLens.clicked.connect(self.add_lens)
 
-        # testParams = QPushButton('Params')
-        # testParams.clicked.connect(self.get_params)
-        # mainLayout.addWidget(testParams)
-
         testParams = QPushButton('Update Plot')
         testParams.clicked.connect(self.update_plot)
         mainLayout.addWidget(testParams)
@@ -74,6 +70,7 @@ class SettingsWidget(QWidget):
         genLayout = QGridLayout()
         generalSet.setLayout(genLayout)
 
+        # Settings for displaying ellipticity function
         ellSet = QGroupBox('Ellipticity', font=smallFont)
         ellSet.setCheckable(True)
         ellLayout = QHBoxLayout()
@@ -110,6 +107,7 @@ class SettingsWidget(QWidget):
         sampling.setValue(500)
         genLayout.addWidget(sampling)
 
+        # Setting the area, the beam profile is drawn
         start, end = QSpinBox(font=smallFont), QSpinBox(font=smallFont)
         start.setPrefix('Start:  ')
         start.setMinimum(-10000)
@@ -119,8 +117,8 @@ class SettingsWidget(QWidget):
         end.setMaximum(10000)
         end.setValue(600)
 
-        start.valueChanged.connect(lambda: self.update_limits(start.value(), 'min'))
-        end.valueChanged.connect(lambda: self.update_limits(end.value(), 'max'))
+        start.editingFinished.connect(lambda: self.update_limits(start.value(), 'min'))
+        end.editingFinished.connect(lambda: self.update_limits(end.value(), 'max'))
 
         self.start_end = (start, end)
 
@@ -159,7 +157,6 @@ class SettingsWidget(QWidget):
         laserSet.setToolTip('')
         laserLayout = QGridLayout()
         laserLayout.setSpacing(8)
-        #laserSet.setLayout(laserLayout)
         laserSet.setMaximumHeight(250)
 
         vLayout = QVBoxLayout()
@@ -220,7 +217,6 @@ class SettingsWidget(QWidget):
         self.paramInputs = [w_X, w_Y, zR_X, zR_Y, z0_X, z0_Y, wav, divergence]
 
         # Connect Functions
-        # w_X.editingFinished.co
         w_X.editingFinished.connect(self.update_waist_X)
         w_Y.editingFinished.connect(self.update_waist_Y)
         wav.valueChanged.connect(self.update_wavelength)
@@ -349,7 +345,6 @@ class SettingsWidget(QWidget):
         # print(self.lenses)
         # print(list(self.lenses.keys()))
 
-
     def remove_lens(self, num):
         print(f'Remove Lens {num}')
         for key in self.lenses[f'l_{num}']:
@@ -378,8 +373,6 @@ class SettingsWidget(QWidget):
         self.lenses[f'l_{slider}']['posSlid'].setValue(int(value))
         self.update_plot()
 
-
-
     def update_wavelength(self, val):
         self.wavelength = val
 
@@ -392,7 +385,6 @@ class SettingsWidget(QWidget):
         self.paramInputs[3].setValue(self.ray_Y)
 
         self.update_plot()
-
 
     def update_waist_X(self):
         val = self.paramInputs[0].value()
@@ -415,7 +407,6 @@ class SettingsWidget(QWidget):
             self.divergence_Y = gsf.theta(val, self.ray_Y, parent='waist Y')
             self.paramInputs[3].setValue(self.ray_Y)
             self.update_plot()
-
 
     def update_rayleigh_X(self):
         val = self.paramInputs[2].value()
@@ -533,11 +524,9 @@ class SettingsWidget(QWidget):
         end = self.start_end[1].value()
         return start, end
 
-
     def class_attributes(self):
         atts = ['waist_X', 'waist_Y', 'ray_X', 'ray_Y', 'z0_X', 'z0_Y', 'divergence_X', 'divergence_Y', 'wavelength']
         return atts
-
 
     def update_plot(self):
         self.beam_params = self.get_params()
