@@ -1,7 +1,9 @@
 # GaussBeamQT
 Small tool to visualise the beam profile following gaussian beam optics.
-
 Most of the input values need to be applied by pressing enter. If the plot is not update although values changed, try pressing udate plot.
+
+![grafik](https://github.com/user-attachments/assets/7a4d5256-4c1f-4b65-9b22-cd2c57f90a99)
+
 
 # Run/Build It Yourself
 To run the program either download the executable (Windows only) or run the python code locally.
