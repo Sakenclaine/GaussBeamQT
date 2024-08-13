@@ -1,5 +1,9 @@
 # GaussBeamQT
 Small tool to visualise the beam profile following gaussian beam optics.
 
-# Build It Yourself
-The project is available as an windows executable using PyInstaller (https://pyinstaller.org).
+# Run/Build It Yourself
+To run the program either download the executable (Windows only) or run the python code locally.
+The executable is created using PyInstaller (https://pyinstaller.org).
+
+In order to run the source code create a python environment containing the packages given in the .yml file 
+and the run main.py.  
